@@ -17,9 +17,45 @@ namespace AppSonga.Data
     public class ConsultaRepository
     {
         private readonly string _connectionString;
+        private IConfiguration _configuration;
 
+        public string getConexion(string conn)
+        {
+            string conexion = "";
+            switch (conn)
+            {
+                case "PRODUCCION":
+                    conexion = _configuration.GetConnectionString("DefaultConnectionString");
+                    break;
+                case "RRHH":
+                    conexion = _configuration.GetConnectionString("ConnectionStringRRHH");
+                    break;
+                case "SONG":
+                    conexion = _configuration.GetConnectionString("ConnectionStringSONG");
+                    break;
+                case "PROYECTO":
+                    conexion = _configuration.GetConnectionString("ConnectionStringPROYECTO");
+                    break;
+                case "DESAPRODUCCION":
+                    conexion = _configuration.GetConnectionString("ConnectionStringDesaProduccion");
+                    break;
+                case "DESARRHH":
+                    conexion = _configuration.GetConnectionString("ConnectionStringDesaRRHH");
+                    break;
+                case "DESSONG":
+                    conexion = _configuration.GetConnectionString("ConnectionStringDesaSONG");
+                    break;
+                case "DESPROYECTO":
+                    conexion = _configuration.GetConnectionString("ConnectionStringDesaPROYECTO");
+                    break;
+
+
+            }
+            return conexion;
+        }
         public ConsultaRepository(IConfiguration configuration)
         {
+            _configuration = configuration;
             _connectionString = configuration.GetConnectionString("DefaultConnectionString");
         }
         public async Task<string> GetAll()
@@ -101,13 +137,14 @@ namespace AppSonga.Data
 
                 string sp = cons.sp;
                 string parameters = cons.parameters;
+                string connection = cons.connection;
                 SqlDbType typeParam;
                 SqlParameter parameter;
                 //sp;Id:3:Int|Codigo:45:NVarchar|;
                 //SqlDatabase db = new SqlDatabase(_connectionString);
                 //DbCommand sql = db.GetStoredProcCommand(sp);
 
-                using (SqlConnection sql = new SqlConnection(_connectionString))
+                using (SqlConnection sql = new SqlConnection(getConexion(connection)))
                 {
                     using (SqlCommand cmd = new SqlCommand(sp, sql))
                     {

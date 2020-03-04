@@ -13,8 +13,7 @@ namespace AppSonga.Context
             : base(options)
         {
 
-        }
-        public DbSet<AppSonga.Models.Tallas> Tallas { get; set; }
+        } 
         public DbSet<AppSonga.Models.Consulta> Consulta { get; set; }
     }
 }

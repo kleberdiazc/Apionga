@@ -9,5 +9,7 @@ namespace AppSonga.Models
     {
         public string sp { get; set; }
         public string parameters { get; set; }
+
+        public string connection { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace AppSonga.Data
             string conexion = "";
             switch (conn)
             {
-                case "PRD":
+                case "PRODUCCION":
                     conexion = _configuration.GetConnectionString("DefaultConnectionString");
                     break;
                 case "RRHH":
@@ -28,10 +28,10 @@ namespace AppSonga.Data
                 case "SONG":
                     conexion = _configuration.GetConnectionString("ConnectionStringSONG");
                     break;
-                case "PRY":
+                case "PROYECTO":
                     conexion = _configuration.GetConnectionString("ConnectionStringPROYECTO");
                     break;
-                case "DESAPRD":
+                case "DESAPRODUCCION":
                     conexion = _configuration.GetConnectionString("ConnectionStringDesaProduccion");
                     break;
                 case "DESARRHH":
@@ -40,11 +40,9 @@ namespace AppSonga.Data
                 case "DESSONG":
                     conexion = _configuration.GetConnectionString("ConnectionStringDesaSONG");
                     break;
-                case "DESPRY":
+                case "DESPROYECTO":
                     conexion = _configuration.GetConnectionString("ConnectionStringDesaPROYECTO");
                     break;
-
-
             }
             return conexion;
         }
@@ -177,6 +175,11 @@ namespace AppSonga.Data
                     }
                 }
             }
+            //catch (Exception exs)
+            //{
+            //    de.Rows.Add("true", exs.Message.ToString());
+            //    valor = JsonConvert.SerializeObject(de, Formatting.Indented);
+            //}
             catch (SqlException ex)
             {
                 de.Rows.Add("true", ex.Message.ToString());

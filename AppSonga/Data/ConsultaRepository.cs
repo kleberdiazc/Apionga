@@ -48,7 +48,15 @@ namespace AppSonga.Data
                 case "DESPROYECTO":
                     conexion = _configuration.GetConnectionString("ConnectionStringDesaPROYECTO");
                     break;
-
+                case "PREPRO":
+                    conexion = _configuration.GetConnectionString("ConnectionStringPrePro");
+                    break;
+                case "PRERRHH":
+                    conexion = _configuration.GetConnectionString("ConnectionStringPreRRHH");
+                    break;
+                case "PRESONG":
+                    conexion = _configuration.GetConnectionString("ConnectionStringPreSONG");
+                    break;
 
             }
             return conexion;
@@ -162,7 +170,14 @@ namespace AppSonga.Data
                                         typeParam = (SqlDbType)Enum.Parse(typeof(SqlDbType), split3[2].ToString(), true);
                                         //db.AddInParameter(sql, split3[0].ToString(), typeParam, split3[1].ToString());
                                         parameter = new SqlParameter(split3[0].ToString(), typeParam);
-                                        parameter.Value = split3[1].ToString();
+                                        if(split3[1].ToString() == "null")
+                                        {
+                                            parameter.Value = null;
+                                        }
+                                        else {
+                                            parameter.Value = split3[1].ToString();
+                                        }
+                                       
                                         cmd.Parameters.Add(parameter);
                                     }
                                 }
@@ -179,13 +194,13 @@ namespace AppSonga.Data
                             valor = JsonConvert.SerializeObject(de, Formatting.Indented);
                         }
 
-                        
+
                     }
                 }
-                }
+            }
             catch (SqlException ex)
             {
-               valor = JsonConvert.SerializeObject(ex.Message.ToString(), Formatting.Indented); 
+                valor = JsonConvert.SerializeObject(ex.Message.ToString(), Formatting.Indented);
             }
 
             return valor;
